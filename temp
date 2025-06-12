@@ -1,0 +1,8 @@
+---
+- name: Say Hello
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Print Hello
+      ansible.builtin.debug:
+        msg: "Hello"
