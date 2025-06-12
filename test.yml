@@ -1,0 +1,26 @@
+---
+- name: Sample Test Playbook
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Check if sample config file exists
+      ansible.builtin.stat:
+        path: /etc/sample.conf
+      register: sample_file
+
+    - name: Fail if /etc/sample.conf does not exist
+      ansible.builtin.fail:
+        msg: "/etc/sample.conf is missing!"
+      when: not sample_file.stat.exists
+
+    - name: Ensure nginx is installed
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Ensure nginx service is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
